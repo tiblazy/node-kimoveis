@@ -11,15 +11,17 @@ export default class User {
     return res.status(201).json(user);
   };
 
-  static read = async (req: Request, res: Response) => {
+  static list = async (req: Request, res: Response) => {
     const users = await userReadService();
 
     return res.status(200).json(users);
   };
 
   static delete = async (req: Request, res: Response) => {
+    const { isAdm } = req.user;
     const { id } = req.params;
-    await userDeleteService(id);
+
+    await userDeleteService(isAdm, id);
 
     return res.status(200).json();
   };

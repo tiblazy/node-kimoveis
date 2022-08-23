@@ -13,12 +13,13 @@ import scheduleRoutes from "./routes/schedule.routes";
 const app = express();
 app.use(express.json());
 
-app.use(handleErrorMiddleware);
 
 app.use("/login", sessionRoutes);
 app.use("/users", userRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/schedules", scheduleRoutes);
+
+app.use(handleErrorMiddleware);
 
 export default app;

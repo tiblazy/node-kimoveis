@@ -9,7 +9,7 @@ import AppError from "../../errors/App.error";
 const sessionSignInService = async ({
   email,
   password,
-}: IUserLogin): Promise<User> => {
+}: IUserLogin): Promise<string> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const user = await userRepository.findOne({ where: { email } });
@@ -34,7 +34,7 @@ const sessionSignInService = async ({
     { subject: user.id, expiresIn: "2h" }
   );
 
-  return { ...user, token };
+  return token;
 };
 
 export default sessionSignInService;
