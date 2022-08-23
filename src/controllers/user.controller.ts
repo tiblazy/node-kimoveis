@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import userCreateService from "../services/user/userCreate.service";
 import userDeleteService from "../services/user/userDelete.service";
-import userReadService from "../services/user/userRead.service";
+import userListService from "../services/user/userList.service";
 
 export default class User {
   static create = async (req: Request, res: Response) => {
@@ -12,7 +12,8 @@ export default class User {
   };
 
   static list = async (req: Request, res: Response) => {
-    const users = await userReadService();
+    const { isAdm } = req.user;
+    const users = await userListService(isAdm);
 
     return res.status(200).json(users);
   };

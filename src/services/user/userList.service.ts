@@ -1,8 +1,11 @@
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
+import AppError from "../../errors/App.error";
 import { IUserShown } from "../../interfaces/users";
 
-const userReadService = async (): Promise<IUserShown[]> => {
+const userListService = async (isAdm: boolean): Promise<IUserShown[]> => {
+  if (!isAdm) throw new AppError("Invalid Access", 403);
+
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.find();
 
@@ -12,4 +15,4 @@ const userReadService = async (): Promise<IUserShown[]> => {
   return users;
 };
 
-export default userReadService;
+export default userListService;

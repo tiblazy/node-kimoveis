@@ -14,19 +14,13 @@ const sessionSignInService = async ({
 
   const user = await userRepository.findOne({ where: { email } });
 
-  if (!user) {
-    throw new AppError("Invalid email or password", 401);
-  }
+  if (!user) throw new AppError("Invalid email or password", 401);
 
-  if (!user.isActive) {
-    throw new AppError("Invalid user", 401);
-  }
+  if (!user.isActive) throw new AppError("Invalid user", 401);
 
   const matchPassword = await compare(password, user.password);
 
-  if (!matchPassword) {
-    throw new AppError("Invalid email or password", 401);
-  }
+  if (!matchPassword) throw new AppError("Invalid email or password", 401);
 
   const token = jwt.sign(
     { isAdm: user.isAdm },

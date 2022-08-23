@@ -11,9 +11,7 @@ const categoryCreateService = async (
   const categoryCreated = categoryRepository.create(categoryData);
   await categoryRepository.save(categoryCreated);
 
-  if (!isAdm) {
-    throw new AppError("Invalid Permission", 401);
-  }
+  if (!isAdm) throw new AppError("Invalid Permission", 401);
 
   return categoryCreated;
 };

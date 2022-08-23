@@ -7,19 +7,15 @@ const userDeleteService = async (
   id: string
 ): Promise<boolean> => {
   if (!isAdm) {
-    throw new AppError("Invalid Permission", 401);
+    throw new AppError("Invalid Permission", 403);
   }
 
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.findOne({ where: { id } });
 
-  if (!user) {
-    throw new AppError("User not found", 401);
-  }
+  if (!user) throw new AppError("User not found", 404);
 
-  if (!user.isActive) {
-    throw new AppError("User already inactived");
-  }
+  if (!user.isActive) throw new AppError("User already inactived", 400);
 
   const userDesactive = (user.isActive = false);
   const userUpdate = Object.assign(user!, userDesactive);

@@ -12,11 +12,11 @@ export default class SchedulesUsersProperties {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column()
-  date: Date;
+  @Column() //date
+  date: string;
 
-  @CreateDateColumn()
-  hour: Date;
+  @CreateDateColumn() //date
+  hour: string;
 
   @Column("uuid")
   propertyId: string;

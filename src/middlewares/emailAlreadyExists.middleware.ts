@@ -14,7 +14,7 @@ const emailAlreadyExistsMiddleware = async (
   const alreadyExists = await userRepository.findOne({ where: { email } });
 
   if (alreadyExists) {
-    throw new AppError("Email already exists", 401);
+    throw new AppError("Email already exists");
   }
 
   next();

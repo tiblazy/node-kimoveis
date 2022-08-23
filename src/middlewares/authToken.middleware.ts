@@ -13,7 +13,9 @@ const authTokenMiddleware = async (
     throw new AppError("Invalid token", 401);
   }
 
-  if (token.includes("Bearer")) token = token.split(" ")[1];
+  // if (token.includes("Bearer"))
+
+  token = token.split(" ")[1];
 
   jwt.verify(
     token,

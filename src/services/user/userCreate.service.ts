@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
-import { IUser, IUserRequest, IUserShown } from "../../interfaces/users";
+import { IUserRequest, IUserShown } from "../../interfaces/users";
 import { hash } from "bcrypt";
 
 const userCreateService = async (
