@@ -17,9 +17,9 @@ export default class User {
     return res.status(200).json(users);
   };
 
-  static delete = (req: Request, res: Response) => {
+  static delete = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const user = userDeleteService(id);
+    await userDeleteService(id);
 
     return res.status(200).json();
   };
