@@ -17,7 +17,7 @@ const scheduleAlreadyExistsMiddleware = async (
     where: { propertyId, date, hour },
   });
 
-  if (alreadyExists) throw new AppError("Schedule already exists");
+  if (alreadyExists) throw new AppError("User schedule already exists");
 
   next();
 };

@@ -2,15 +2,15 @@ import { Router } from "express";
 import Property from "../controllers/property.controller";
 import authTokenMiddleware from "../middlewares/authToken.middleware";
 import propertyExistsMiddleware from "../middlewares/propertyAlreadyExists.middleware";
-import validateAddressMiddleware from "../middlewares/validateProperty.middleware";
+import validateAddressMiddleware from "../middlewares/validateAddress.middleware";
 
 const property = Router();
 
 property.post(
   "",
   authTokenMiddleware,
-  propertyExistsMiddleware,
   validateAddressMiddleware,
+  propertyExistsMiddleware,
   Property.create
 );
 

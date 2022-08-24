@@ -4,7 +4,7 @@ import AppError from "../../errors/App.error";
 import { IUser } from "../../interfaces/users";
 
 const userListService = async (isAdm: boolean): Promise<IUser[]> => {
-  if (!isAdm) throw new AppError("Invalid Access", 403);
+  if (!isAdm) throw new AppError("User is not admin", 403);
 
   const userRepository = AppDataSource.getRepository(User);
   const user = await userRepository.find();

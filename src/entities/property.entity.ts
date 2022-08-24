@@ -41,5 +41,5 @@ export default class Properties {
   address: Address;
 
   @ManyToOne(() => Categories)
-  categoryId: Categories | null;
+  category: Categories;
 }

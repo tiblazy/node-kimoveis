@@ -9,7 +9,7 @@ export default class Schedule {
 
     await scheduleCalendarService(schedule);
 
-    return res.status(201).json({ message: "Schedule create", schedule });
+    return res.status(201).json({ message: "Schedule created" });
   };
 
   static list = async (req: Request, res: Response) => {

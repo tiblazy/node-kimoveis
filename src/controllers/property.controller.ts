@@ -4,12 +4,10 @@ import propertyListService from "../services/property/propertyList.service";
 
 export default class Property {
   static create = async (req: Request, res: Response) => {
-    const { isAdm } = req.user;
     const { value, size, address, categoryId } = req.body;
     const { district, zipCode, number, city, state } = address;
 
     const property = await propertyCreateService(
-      isAdm,
       { value, size, address, categoryId },
       { district, zipCode, number, city, state }
     );

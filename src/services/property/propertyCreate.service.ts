@@ -6,12 +6,9 @@ import Address from "../../entities/address.entity";
 import Categories from "../../entities/category.entity";
 
 const propertyCreateService = async (
-  isAdm: boolean,
   propertyData: IPropertyRequest,
   addressData: IAddressRequest
 ) => {
-  if (!isAdm) throw new AppError("Invalid Permission", 403);
-
   const addressRepository = AppDataSource.getRepository(Address);
   const address = addressRepository.create(addressData);
   await addressRepository.save(address);
@@ -27,10 +24,13 @@ const propertyCreateService = async (
     size: propertyData.size,
     address,
   });
+
+  if (category) property.category = category;
+
   const propertyCreated = await propertyRepository.save(property);
 
   if (!category) throw new AppError("Invalid category", 404);
 
-  return { category: propertyData.categoryId, ...propertyCreated };
+  return { ...propertyCreated };
 };
 export default propertyCreateService;

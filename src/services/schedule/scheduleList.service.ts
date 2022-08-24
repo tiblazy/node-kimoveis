@@ -1,5 +1,8 @@
 import AppDataSource from "../../data-source";
+import Categories from "../../entities/category.entity";
+import Properties from "../../entities/property.entity";
 import SchedulesUsersProperties from "../../entities/schedule.entity";
+import User from "../../entities/user.entity";
 import AppError from "../../errors/App.error";
 
 const scheduleIndexService = async (
@@ -10,15 +13,35 @@ const scheduleIndexService = async (
   const scheduleRepository = AppDataSource.getRepository(
     SchedulesUsersProperties
   );
+  if (!isAdm) throw new AppError("User is not admin", 403);
 
-  const schedule = await scheduleRepository.findOne({ where: { id } });
-  const isOwner = await scheduleRepository.findOne({ where: { userId } });
+  const userRepository = AppDataSource.getRepository(User);
+  const user = await userRepository.findOneBy({ id: userId });
+  if (!user) throw new AppError("User not found", 404);
 
-  if (!isAdm && !isOwner) throw new AppError("Invalid Access", 403);
+  const userShown: Partial<User> = user;
+  delete userShown.password;
 
-  if (!schedule) throw new AppError("Invalid id", 404);
+  const propertyRepository = AppDataSource.getRepository(Properties);
+  const property = await propertyRepository.findOneBy({ id });
+  if (!property) throw new AppError("Property not found", 404);
 
-  return schedule || isOwner;
+  const schedulesFind = await scheduleRepository.find({
+    where: { userId },
+  });
+  const schedules = [...schedulesFind];
+
+  const schedulesDetails: any = schedules;
+  schedulesDetails.map((scheduleDetail: any) => {
+    delete scheduleDetail.propertyId;
+    delete scheduleDetail.userId;
+    scheduleDetail.user = user;
+  });
+
+  const categoryRepository = AppDataSource.getRepository(Categories);
+  const category = await categoryRepository.findOneBy({});
+
+  return { ...property, schedules: schedulesDetails, category };
 };
 
 export default scheduleIndexService;

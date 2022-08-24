@@ -6,7 +6,6 @@ import {
   ManyToOne,
 } from "typeorm";
 import Properties from "./property.entity";
-// import Properties from "./property.entity";
 import User from "./user.entity";
 
 @Entity("schedules_users_properties")

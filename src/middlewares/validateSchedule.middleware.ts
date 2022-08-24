@@ -10,19 +10,29 @@ const validateScheduleMiddleware = async (
 ) => {
   const { propertyId, hour, date } = req.body;
 
-  if (propertyId.length < 36) throw new AppError("Invalid property id", 404);
+  if (propertyId.length < 36) throw new AppError("Property not found", 404);
 
   const propertyRepository = AppDataSource.getRepository(Properties);
   const property = await propertyRepository.findOne({
     where: { id: propertyId },
   });
 
-  if (!property) throw new AppError("Invalid property id", 404);
+  if (!property) throw new AppError("Property not found", 404);
 
   const validateHour = hour.split(":");
 
-  if ((validateHour[0].length && validateHour[1].length) !== 2)
-    throw new AppError("Invalid hour format");
+  if (
+    validateHour[0].length !== 2 ||
+    validateHour[1].length !== 2 ||
+    (validateHour[0].length !== 2 && validateHour[1].length !== 2)
+  )
+    throw new AppError("Invalid hour");
+
+  if (Number(validateHour[0]) < 8 || Number(validateHour[0]) > 18)
+    throw new AppError("Invalid hour");
+
+  // const validateDate = date.split("/");
+  // criar validador de data
 
   next();
 };
@@ -34,14 +44,14 @@ const validateScheduleListMiddleware = async (
 ) => {
   const { id } = req.params;
 
-  if (id.length < 36) throw new AppError("Invalid a id", 404);
+  if (id.length < 36) throw new AppError("Property not found", 404);
 
   const propertyRepository = AppDataSource.getRepository(Properties);
   const property = await propertyRepository.findOne({
     where: { id },
   });
 
-  if (!property) throw new AppError("Invalid b id", 404);
+  if (!property) throw new AppError("Property not found", 404);
 
   next();
 };

@@ -9,6 +9,6 @@ export default class Categories {
   @Column({ unique: true })
   name: string;
 
-  @OneToMany(() => Properties, (property) => property.categoryId)
+  @OneToMany(() => Properties, (property) => property.category)
   categoryId: Properties[];
 }
