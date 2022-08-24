@@ -27,13 +27,12 @@ const validateAddressMiddleware = async (
   const category = await categoryRepository.findOne({
     where: { id: categoryId },
   });
+  if (!category) throw new AppError("Invalid category", 404);
 
   const addressRepository = AppDataSource.getRepository(Address);
   const addressFind = await addressRepository.findOneBy(address);
 
   if (addressFind) {
-    if (!category) throw new AppError("Invalid category", 404);
-
     throw new AppError("Address already exists");
   }
 

@@ -31,8 +31,14 @@ const validateScheduleMiddleware = async (
   if (Number(validateHour[0]) < 8 || Number(validateHour[0]) > 18)
     throw new AppError("Invalid hour");
 
-  // const validateDate = date.split("/");
-  // criar validador de data
+  const validateDate = new Date(date);
+
+  if (
+    validateDate.getDay() === 0 ||
+    validateDate.getDay() === 6 ||
+    `${validateDate}` == "Invalid Date"
+  )
+    throw new AppError("Invalid date");
 
   next();
 };

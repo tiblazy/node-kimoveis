@@ -5,10 +5,9 @@ import categoryIndexService from "../services/category/categoryIndex.service";
 
 export default class Category {
   static create = async (req: Request, res: Response) => {
-    const { isAdm } = req.user;
     const categoryData = req.body;
 
-    const category = await categoryCreateService(isAdm, categoryData);
+    const category = await categoryCreateService(categoryData);
 
     return res.status(201).json(category);
   };

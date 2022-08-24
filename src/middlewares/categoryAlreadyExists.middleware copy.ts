@@ -8,7 +8,10 @@ const categoryAlreadyExistsMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { isAdm } = req.user;
   const { name } = req.body;
+
+  if (!isAdm) throw new AppError("User is not admin", 403);
 
   const categoryRepository = AppDataSource.getRepository(Categories);
   const alreadyExists = await categoryRepository.findOne({ where: { name } });
