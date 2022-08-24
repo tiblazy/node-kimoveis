@@ -7,7 +7,10 @@ import {
 declare global {
   namespace Express {
     interface Request {
-      user: { isAdm: boolean };
+      user: {
+        userId: string;
+        isAdm: boolean;
+      };
     }
   }
 }

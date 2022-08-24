@@ -14,10 +14,10 @@ export default class SchedulesUsersProperties {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column() //date
+  @Column({ type: "date" })
   date: string;
 
-  @CreateDateColumn() //date
+  @Column({ type: "time" })
   hour: string;
 
   @Column("uuid")

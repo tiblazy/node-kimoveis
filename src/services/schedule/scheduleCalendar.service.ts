@@ -12,9 +12,8 @@ const scheduleCalendarService = async (
 
   const schedule = scheduleRepository.create(scheduleData);
   await scheduleRepository.save(scheduleData);
-  //   if (!isAdm) throw new AppError("Invalid Access", 401);
 
-  //   if (!schedule) throw new AppError("Invalidi id", 401);
+  if (!schedule) throw new AppError("Invalidi id", 401);
 
   return schedule;
 };

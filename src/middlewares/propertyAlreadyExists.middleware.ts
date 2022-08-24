@@ -15,6 +15,9 @@ const propertyExistsMiddleware = async (
     address: { district, zipCode, city, state },
   } = req.body;
 
+  if (categoryIdId && categoryIdId.length < 36)
+    throw new AppError("Invalid category id", 404);
+
   const propertyRepository = AppDataSource.getRepository(Properties);
   const addressRepository = AppDataSource.getRepository(Address);
 
