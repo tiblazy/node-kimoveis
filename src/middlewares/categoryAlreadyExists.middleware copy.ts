@@ -13,9 +13,7 @@ const categoryAlreadyExistsMiddleware = async (
   const categoryRepository = AppDataSource.getRepository(Categories);
   const alreadyExists = await categoryRepository.findOne({ where: { name } });
 
-  if (alreadyExists) {
-    throw new AppError("Category already exists", 401);
-  }
+  if (alreadyExists) throw new AppError("Category already exists");
 
   next();
 };

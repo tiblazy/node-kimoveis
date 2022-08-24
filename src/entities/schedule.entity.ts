@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from "typeorm";
+import Properties from "./property.entity";
+// import Properties from "./property.entity";
 import User from "./user.entity";
 
-@Entity("schecudles_users_properties")
+@Entity("schedules_users_properties")
 export default class SchedulesUsersProperties {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
@@ -23,6 +25,9 @@ export default class SchedulesUsersProperties {
 
   @Column("uuid")
   userId: string;
+
+  @ManyToOne(() => Properties)
+  property: Properties;
 
   @ManyToOne(() => User)
   user: User;

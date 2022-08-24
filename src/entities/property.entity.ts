@@ -5,10 +5,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  //   ManyToMany,
+  OneToOne,
+  OneToMany,
+  JoinColumn,
 } from "typeorm";
-import Category from "../controllers/category.controller";
+import Address from "./address.entity";
 import Categories from "./category.entity";
+import SchedulesUsersProperties from "./schedule.entity";
 
 @Entity("properties")
 export default class Properties {
@@ -18,7 +21,7 @@ export default class Properties {
   @Column({ default: false })
   sold: boolean;
 
-  @Column({ type: "decimal", precision: 12, scale: 2 })
+  @Column({ type: "decimal", precision: 12, scale: 2, default: 0 })
   value: number;
 
   @Column()
@@ -30,14 +33,13 @@ export default class Properties {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: "uuid", unique: true })
-  addressId: string;
+  @OneToMany(() => SchedulesUsersProperties, (schedule) => schedule.propertyId)
+  propertyId: SchedulesUsersProperties[];
 
-  @Column("uuid")
-  categoryId: string;
-
-  // @ManyToMany
+  @OneToOne(() => Address, { eager: true })
+  @JoinColumn()
+  address: Address;
 
   @ManyToOne(() => Categories)
-  category: Category;
+  categoryId: Categories | null;
 }

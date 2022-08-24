@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import Categories from "../../entities/category.entity";
-import { ICategory } from "../../interfaces/categories";
+import { ICategory } from "../../interfaces/categories"; 
 
 const categoryListService = async (): Promise<ICategory[]> => {
   const categoryRepository = AppDataSource.getRepository(Categories);

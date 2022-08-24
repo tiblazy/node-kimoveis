@@ -1,16 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
-import Properties from "./property.entity";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity("addresses")
 export default class Address {
   @PrimaryGeneratedColumn("uuid")
-  readonly id: string;
+  id: string;
 
   @Column()
   district: string;
 
-  @Column()
-  zipcode: string;
+  @Column({ length: 8 })
+  zipCode: string;
 
   @Column({ nullable: true })
   number: string;
@@ -18,9 +17,6 @@ export default class Address {
   @Column()
   city: string;
 
-  @Column()
+  @Column({ length: 2 })
   state: string;
-
-  @OneToOne(() => Properties)
-  addressId: Properties;
 }

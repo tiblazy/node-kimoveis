@@ -1,20 +1,36 @@
 import AppDataSource from "../../data-source";
-import { IPropertyRequest } from "../../interfaces/properties";
+import { IAddressRequest, IPropertyRequest } from "../../interfaces/properties";
 import AppError from "../../errors/App.error";
 import Properties from "../../entities/property.entity";
+import Address from "../../entities/address.entity";
+import Categories from "../../entities/category.entity";
 
 const propertyCreateService = async (
   isAdm: boolean,
-  propertyData: IPropertyRequest
+  propertyData: IPropertyRequest,
+  addressData: IAddressRequest
 ) => {
+  if (!isAdm) throw new AppError("Invalid Permission", 403);
+
+  const addressRepository = AppDataSource.getRepository(Address);
+  const address = addressRepository.create(addressData);
+  await addressRepository.save(address);
+
+  const categoryRepository = AppDataSource.getRepository(Categories);
+  const category = await categoryRepository.findOne({
+    where: { id: propertyData.categoryId },
+  });
+
   const propertyRepository = AppDataSource.getRepository(Properties);
-  const propertyCreated = propertyRepository.create(propertyData);
-  await propertyRepository.save(propertyCreated);
+  const property = propertyRepository.create({
+    value: propertyData.value,
+    size: propertyData.size,
+    address,
+  });
+  const propertyCreated = await propertyRepository.save(property);
 
-  if (!isAdm) throw new AppError("Invalid Permission", 401);
+  if (!category) throw new AppError("Invalid category", 404);
 
-  return true;
-  // return propertyCreated;
+  return { category: propertyData.categoryId, ...propertyCreated };
 };
 export default propertyCreateService;
-// : Promise<IPropertyRequest>
