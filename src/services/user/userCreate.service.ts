@@ -18,5 +18,4 @@ const userCreateService = async (userData: IUserRequest): Promise<IUser> => {
   return userShown;
 };
 
-
 export default userCreateService;
