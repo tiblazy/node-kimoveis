@@ -1,7 +1,7 @@
 import AppDataSource from "../../data-source";
 import User from "../../entities/user.entity";
 import { IUserRequest, IUser } from "../../interfaces/users";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 
 const userCreateService = async (userData: IUserRequest): Promise<IUser> => {
   const userRepository = AppDataSource.getRepository(User);
