@@ -2,7 +2,7 @@ import { Router } from "express";
 import Category from "../controllers/category.controller";
 
 import authTokenMiddleware from "../middlewares/authToken.middleware";
-import categoryAlreadyExistsMiddleware from "../middlewares/categoryAlreadyExists.middleware copy";
+import categoryAlreadyExistsMiddleware from "../middlewares/categoryAlreadyExists.middleware";
 
 const category = Router();
 
